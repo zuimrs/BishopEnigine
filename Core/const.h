@@ -1,9 +1,15 @@
 #ifndef _CONST_H_
 #define _CONST_H_
 
-#define DEBUG False
+#define DEBUG
 
-
+#define DEFAULT_WINDOW_TITLE "Default"
+#define DEFAULT_WINDOW_WIDTH 800
+#define DEFAULT_WINDOW_HEIGHT 600
+#define DEFAULT_WINDOW_FULL_SCREEN false
+#define DEFAULT_WINDOW_POSX 0
+#define DEFAULT_WINDOW_POSY 0
+#define DEFAULT_WINDOW_FRAME_PER_SECOND 60
 
 
 
