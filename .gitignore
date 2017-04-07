@@ -28,6 +28,9 @@
 *.out
 *.app
 
+# 3rd lib
+/3rd/*
+
 # Debug files
 debug.cpp
 Makefile
