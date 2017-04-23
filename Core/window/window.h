@@ -29,6 +29,7 @@ using namespace std;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mode);
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 class WindowSize
 {
 public:
@@ -92,20 +93,16 @@ private:
     // key & mouse
     friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
     friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mode);
+    friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 // private attributes
 private:
-    vector<void(*)(void)> _startFunctionSequence;
-    vector<void(*)(void)> _updateFunctionSequence;
-    string _windowTitle;
-    WindowSize _windowSize;
-    WindowPos _windowPos;
-    bool _isFullScreen;
-    bool _isWindowActive;
     GLFWwindow * _windowInstance;
     GLFWmonitor ** _pMonitor;
+    vector<void(*)(void)> _startFunctionSequence, _updateFunctionSequence;
+    string _windowTitle; WindowSize _windowSize; WindowPos _windowPos;
+    bool _isFullScreen,_isWindowActive;
     int _monitorCount;
-    int _screenX;
-    int _screenY;
+    int _screenX,_screenY;
     // keys & mouse
     bool _keys[MAX_KEYS];
     bool _mouseButtons[MAX_BUTTONS];

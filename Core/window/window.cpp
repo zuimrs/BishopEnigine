@@ -73,6 +73,7 @@ void Window::initializeWindow()
 	glfwSetKeyCallback(this->_windowInstance, key_callback);
 	// 鼠标回调函数
 	glfwSetMouseButtonCallback(this->_windowInstance,mouse_button_callback);
+	glfwSetCursorPosCallback(this->_windowInstance,cursor_position_callback);
 	// 初始化glew
 	glewExperimental = GL_TRUE;
 	GLenum glewinit = glewInit();
@@ -238,7 +239,14 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mode)
 {
 	Window * win = (Window *) glfwGetWindowUserPointer(window);
 #ifdef DEBUG
-	cout <<"mousebutton:" << button <<" is pressed!" << endl;
+	cout <<"mousebutton:" << button <<" is pressed at ";
+	cout <<"("<<win->_mouseX<<","<<win->_mouseY<<")"<<endl;
 #endif
 	win->_mouseButtons[button] = action != GLFW_RELEASE;
+}
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	Window * win = (Window *) glfwGetWindowUserPointer(window);
+	win->_mouseX = xpos;
+	win->_mouseY = ypos;	
 }
