@@ -12,13 +12,13 @@ using namespace std;
 string ReadFile(const char * filePath)
 {
 	string content;
-	ifstream fileStream(filePath, ios::in);
+	ifstream fileStream(filePath);
 
 	if(!fileStream.is_open())
 	{
 
 #ifndef _EXCEPTION_H_
-		cerr << "Failed to read " << filePath << ". File does not exist." << endl;
+		cout << "Failed to read " << filePath << ". File does not exist." << endl;
 #endif
 		return "";
 	}

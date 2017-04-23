@@ -1,6 +1,8 @@
 #ifndef _WINDOW_H_
 #define _WINDOW_H_
 
+#define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
@@ -19,12 +21,14 @@ using namespace std;
 #define DEFAULT_WINDOW_POSX 0
 #define DEFAULT_WINDOW_POSY 0
 #define DEFAULT_WINDOW_FRAME_PER_SECOND 60
+#define MAX_KEYS 1024
+#define MAX_BUTTONS 32
 
 #endif
 
 
-
-
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mode);
 class WindowSize
 {
 public:
@@ -73,8 +77,8 @@ public:
 
  // private methods   
 private:
-    // glfunction init
-    void glFunctionInit();
+    // glfwfunction init
+    void glfwFunctionInit();
     // main loop
     void windowMainLoop();
     // display control
@@ -85,7 +89,9 @@ private:
     void startFunctionCallback();
     void updateFunctionCallback();
 
-
+    // key & mouse
+    friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+    friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mode);
 // private attributes
 private:
     vector<void(*)(void)> _startFunctionSequence;
@@ -100,6 +106,10 @@ private:
     int _monitorCount;
     int _screenX;
     int _screenY;
+    // keys & mouse
+    bool _keys[MAX_KEYS];
+    bool _mouseButtons[MAX_BUTTONS];
+    double _mouseX,_mouseY;
 };
 
 
