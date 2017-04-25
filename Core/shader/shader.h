@@ -14,7 +14,7 @@ public:
     GLuint getProgramID(){return this->_programID;}
 private:
     std::string readFile(const char *);
-    void loadShader(const char *,const char *);
+    GLuint loadShader(const char *,const char *);
 private:
     GLuint _programID;
 };

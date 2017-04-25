@@ -35,14 +35,14 @@ string Shader::readFile(const char * filePath)
 	return content;
 }
 
-void Shader::loadShader(const char * vertex_path,const char * fragment_path)
+GLuint Shader::loadShader(const char * vertex_path,const char * fragment_path)
 {
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     // Read shaders
-    string vertShaderStr = ReadFile(vertex_path);
-    string fragShaderStr = ReadFile(fragment_path);
+    string vertShaderStr = readFile(vertex_path);
+    string fragShaderStr = readFile(fragment_path);
     const char *vertShaderSrc = vertShaderStr.c_str();
     const char *fragShaderSrc = fragShaderStr.c_str();
 
