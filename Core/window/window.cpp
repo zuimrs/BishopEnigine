@@ -5,8 +5,8 @@ using namespace std;
 Window::Window(
 		const bool fullscreen,
         const string title,
-        const int width,
-        const int height)
+        const GLfloat width,
+        const GLfloat height)
 {
 #ifdef DEBUG
 	cout << "Begin Window()" << endl;
@@ -51,8 +51,8 @@ Window::Window(
 void Window::initializeWindow()
 {
 	GLFWmonitor * pMonitor = this->_isFullScreen ? this->_pMonitor[0]: NULL;
-	int width = this->_isFullScreen ? this->_screenX : getWindowSize().windowWidth;
-	int height = this->_isFullScreen ? this->_screenY : getWindowSize().windowHeight;
+	GLfloat width = this->_isFullScreen ? this->_screenX : getWindowSize().windowWidth;
+	GLfloat height = this->_isFullScreen ? this->_screenY : getWindowSize().windowHeight;
 	
 	this->_windowInstance = 
 			glfwCreateWindow(width,height,getWindowTitle().c_str(),pMonitor,NULL);	
@@ -74,6 +74,7 @@ void Window::initializeWindow()
 	// 鼠标回调函数
 	glfwSetMouseButtonCallback(this->_windowInstance,mouse_button_callback);
 	glfwSetCursorPosCallback(this->_windowInstance,cursor_position_callback);
+	glfwSetInputMode(this->_windowInstance,GLFW_CURSOR,GLFW_CURSOR_DISABLED);
 	// 初始化glew
 	glewExperimental = GL_TRUE;
 	GLenum glewinit = glewInit();
@@ -109,7 +110,7 @@ void Window::glfwFunctionInit()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 }
-void Window::setWindowSize(const int width,const int height)
+void Window::setWindowSize(const GLfloat width,const GLfloat height)
 {
     this->_windowSize.windowHeight = height;
     this->_windowSize.windowWidth = width;
@@ -118,7 +119,7 @@ void Window::setWindowSize(const int width,const int height)
 
 }
 
-void Window::setWindowPos(const int posX,const int posY,const bool fullScreen)
+void Window::setWindowPos(const GLfloat posX,const GLfloat posY,const bool fullScreen)
 {
     if(fullScreen == true)
     {
@@ -204,7 +205,7 @@ void Window::changeDisplayMode()
 	cout << "new window created" << endl;
 #endif
 }
-void Window::windowDisplayModeChangeCallback(const int width,const int height)
+void Window::windowDisplayModeChangeCallback(const GLfloat width,const GLfloat height)
 {
     // 设置视口为窗口的大小
     glViewport(0, 0, width, height);
@@ -240,13 +241,15 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mode)
 	Window * win = (Window *) glfwGetWindowUserPointer(window);
 #ifdef DEBUG
 	cout <<"mousebutton:" << button <<" is pressed at ";
-	cout <<"("<<win->_mouseX<<","<<win->_mouseY<<")"<<endl;
+	cout <<"("<<win->cursorX<<","<<win->cursorY<<")"<<endl;
 #endif
 	win->_mouseButtons[button] = action != GLFW_RELEASE;
 }
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	Window * win = (Window *) glfwGetWindowUserPointer(window);
-	win->_mouseX = xpos;
-	win->_mouseY = ypos;	
+	win->cursorOffsetX = xpos - win->cursorX;
+	win->cursorOffsetY = win->cursorY - ypos;
+	win->cursorX = xpos;
+	win->cursorY = ypos;	
 }
