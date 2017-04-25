@@ -33,14 +33,14 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 class WindowSize
 {
 public:
-    int windowHeight;
-    int windowWidth;
+    GLfloat windowHeight;
+    GLfloat windowWidth;
 };
 class WindowPos
 {
 public:
-    int windowPosX;
-    int windowPosY;
+    GLfloat windowPosX;
+    GLfloat windowPosY;
 };
 
 class Window
@@ -50,8 +50,8 @@ public:
     Window(
         const bool fullscreen = DEFAULT_WINDOW_FULL_SCREEN,
         const string title = DEFAULT_WINDOW_TITLE,
-        const int width = DEFAULT_WINDOW_WIDTH,
-        const int height = DEFAULT_WINDOW_HEIGHT);
+        const GLfloat width = DEFAULT_WINDOW_WIDTH,
+        const GLfloat height = DEFAULT_WINDOW_HEIGHT);
     ~Window();
 
     // get
@@ -60,13 +60,19 @@ public:
     WindowPos getWindowPos(){return this->_windowPos;}
     string getWindowTitle(){return this->_windowTitle;}
     bool getWindowActive(){return this->_isWindowActive;}
-
+    bool getKeys(int index)
+    {
+        if(index >=0 && index <MAX_KEYS)
+            return this->_keys[index];
+        return false;
+    }
+    GLfloat getDeltaTime(){return this->_deltaTime;}
     // set
     void setWindowTitle(const string title){glfwSetWindowTitle(this->_windowInstance,title.c_str());}
-    void setWindowSize(const int width,const int height);
+    void setWindowSize(const GLfloat width,const GLfloat height);
     void setWindowPos(
-        const int posX = DEFAULT_WINDOW_POSX,
-        const int posY = DEFAULT_WINDOW_POSY,
+        const GLfloat posX = DEFAULT_WINDOW_POSX,
+        const GLfloat posY = DEFAULT_WINDOW_POSY,
         const bool fullScreen = DEFAULT_WINDOW_FULL_SCREEN);
 
     // function call back
@@ -86,7 +92,7 @@ private:
     void changeDisplayMode();
     // call back
     void windowMinisizeCallback();
-    void windowDisplayModeChangeCallback(const int,const int);
+    void windowDisplayModeChangeCallback(const GLfloat,const GLfloat);
     void startFunctionCallback();
     void updateFunctionCallback();
 
@@ -103,10 +109,16 @@ private:
     bool _isFullScreen,_isWindowActive;
     int _monitorCount;
     int _screenX,_screenY;
+    // frame speed
+    GLfloat _deltaTime;
     // keys & mouse
     bool _keys[MAX_KEYS];
     bool _mouseButtons[MAX_BUTTONS];
-    double _mouseX,_mouseY;
+
+public:
+    GLfloat cursorX,cursorY;
+    GLfloat cursorOffsetX,cursorOffsetY;
+    
 };
 
 
