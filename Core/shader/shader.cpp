@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string ReadFile(const char * filePath)
+string Shader::readFile(const char * filePath)
 {
 	string content;
 	ifstream fileStream(filePath);
@@ -35,7 +35,7 @@ string ReadFile(const char * filePath)
 	return content;
 }
 
-GLuint LoadShader(const char * vertex_path,const char * fragment_path)
+void Shader::loadShader(const char * vertex_path,const char * fragment_path)
 {
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
