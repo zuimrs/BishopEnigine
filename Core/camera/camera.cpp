@@ -1,5 +1,6 @@
 #include "camera.h"
 
+using namespace std;
 Camera::Camera(Window * window):
     _deltaTime(0.0f),
     _yaw(-90.0f),
@@ -19,7 +20,7 @@ Camera::Camera(Window * window):
     // camera参数
     this->_cameraPos = glm::vec3(0,0,0);
     this->_cameraFront = glm::vec3(0,0,0);
-    this->_cameraUp = glm::vec3(0,1,0);
+    this->_cameraUp = glm::vec3(0,0,1);
 }
 void Camera::cameraUpdate()
 {

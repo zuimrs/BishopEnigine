@@ -5,6 +5,14 @@
 #include "const.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#define DEBUG
+
+#ifdef DEBUG
+#include <iostream>
+using namespace std;
+#endif
+
 class Camera
 {
 public:

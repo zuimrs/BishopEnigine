@@ -74,7 +74,12 @@ void Window::initializeWindow()
 	// 鼠标回调函数
 	glfwSetMouseButtonCallback(this->_windowInstance,mouse_button_callback);
 	glfwSetCursorPosCallback(this->_windowInstance,cursor_position_callback);
+	// 初始化指针位置
+	glfwSetCursorPos(this->_windowInstance,0.0,0.0);
+	// 指针属性设置
 	glfwSetInputMode(this->_windowInstance,GLFW_CURSOR,GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(this->_windowInstance,GLFW_CURSOR,1);
+	
 	// 初始化glew
 	glewExperimental = GL_TRUE;
 	GLenum glewinit = glewInit();
@@ -137,14 +142,21 @@ void Window::windowMainLoop()
 	this->startFunctionCallback();
 
     do{
+		glfwPollEvents();
+		// 计算deltatime
+		GLfloat currentFrame = glfwGetTime();
+		this->_deltaTime = currentFrame - this->_lastFrame;
+		this->_lastFrame = currentFrame;
+
 		// glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		// update on every loop
 		this->updateFunctionCallback();
 
-		glfwPollEvents();
 		glfwSwapBuffers(this->_windowInstance);
 		//glfwWaitEventsTimeout(1.0/DEFAULT_WINDOW_FRAME_PER_SECOND);
+		// reset cursorOffset
+		this->resetCursorOffset();
 	} while(glfwWindowShouldClose(this->_windowInstance) == 0 );
 	glfwTerminate();
 }
@@ -251,5 +263,5 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 	win->cursorOffsetX = xpos - win->cursorX;
 	win->cursorOffsetY = win->cursorY - ypos;
 	win->cursorX = xpos;
-	win->cursorY = ypos;	
+	win->cursorY = ypos;
 }

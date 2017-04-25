@@ -74,7 +74,10 @@ public:
         const GLfloat posX = DEFAULT_WINDOW_POSX,
         const GLfloat posY = DEFAULT_WINDOW_POSY,
         const bool fullScreen = DEFAULT_WINDOW_FULL_SCREEN);
-
+    void setWindowCursorPos(double x,double y)
+    {
+        glfwSetCursorPos(this->_windowInstance,x,y);
+    }
     // function call back
     void onStartFunctionCallback(void(*)(void));
     void onUpdateFunctionCallback(void(*)(void));
@@ -96,10 +99,12 @@ private:
     void startFunctionCallback();
     void updateFunctionCallback();
 
+
     // key & mouse
     friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
     friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mode);
     friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+    void resetCursorOffset(){this->cursorOffsetX = 0.0f;this->cursorOffsetY = 0.0f;}
 // private attributes
 private:
     GLFWwindow * _windowInstance;
@@ -109,8 +114,9 @@ private:
     bool _isFullScreen,_isWindowActive;
     int _monitorCount;
     int _screenX,_screenY;
-    // frame speed
+    // frame time
     GLfloat _deltaTime;
+    GLfloat _lastFrame;
     // keys & mouse
     bool _keys[MAX_KEYS];
     bool _mouseButtons[MAX_BUTTONS];
